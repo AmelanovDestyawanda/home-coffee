@@ -1,3 +1,4 @@
+// Abstract Product
 abstract class Product {
   String _id;
   String _name;
@@ -25,6 +26,39 @@ abstract class Product {
 
   // Polymorphism
   String getCategory();
-
-  
 }
+
+// Coffee Product
+class CoffeeProduct extends Product {
+  String image;
+
+  CoffeeProduct(String id, String name, double price, this.image)
+      : super(id, name, price);
+
+  @override
+  String getCategory() => "Coffee";
+}
+
+// Food Product
+class FoodProduct extends Product {
+  String image;
+
+  FoodProduct(String id, String name, double price, this.image)
+      : super(id, name, price);
+
+  @override
+  String getCategory() => "Food";
+}
+
+// ================= Dummy Data =================
+final coffeeMenu = [
+  CoffeeProduct("c1", "Latte", 28000, "assets/images/latte.png"),
+  CoffeeProduct("c2", "Cappuccino", 25000, "assets/images/cappuccino.png"),
+  CoffeeProduct("c3", "Americano", 22000, "assets/images/americano.png"),
+];
+
+final foodMenu = [
+  FoodProduct("f1", "Brownies", 15000, "assets/images/brownies.png"),
+  FoodProduct("f2", "Croissant", 18000, "assets/images/croissant.png"),
+  FoodProduct("f3", "Muffin", 12000, "assets/images/muffin.png"),
+];

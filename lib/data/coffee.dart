@@ -4,8 +4,7 @@ class Coffee extends Product {
   String _size; 
   String _image;
 
-  Coffee(String id, String name, double price, this._size, this._image)
-      : super(id, name, price);
+  Coffee(super.id, super.name, super.price, this._size, this._image);
 
   String get size => _size;
   String get image => _image;

@@ -74,6 +74,7 @@ class HomeScreen extends StatelessWidget {
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
                     
+                          // ignore: deprecated_member_use
                           Colors.black.withOpacity(0.3),
                           BlendMode.darken,
                         ),
@@ -212,6 +213,7 @@ class HomeScreen extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.grey.withOpacity(0.2),
               blurRadius: 6,
               offset: const Offset(0, 4),

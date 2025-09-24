@@ -4,8 +4,7 @@ class Food extends Product {
   String _type; 
   String _image;
 
-  Food(String id, String name, double price, this._type, this._image)
-      : super(id, name, price);
+  Food(super.id, super.name, super.price, this._type, this._image);
 
   String get type => _type;
   String get image => _image;

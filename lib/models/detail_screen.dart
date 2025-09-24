@@ -51,7 +51,6 @@ class DetailScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    child: const Text("Checkout Sekarang"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -61,6 +60,7 @@ class DetailScreen extends StatelessWidget {
                         const SnackBar(content: Text("Checkout berhasil!")),
                       );
                     },
+                    child: const Text("Checkout Sekarang"),
                   ),
                 ),
               ],

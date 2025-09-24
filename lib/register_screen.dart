@@ -74,7 +74,6 @@ class _RegisterScreenState extends State<RegisterScreen>
       errorMessage = null;
     });
 
-    // TODO: Simpan data user ke database atau backend
     Navigator.pushReplacementNamed(context, '/main');
   }
 

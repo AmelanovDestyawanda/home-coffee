@@ -32,8 +32,7 @@ abstract class Product {
 class CoffeeProduct extends Product {
   String image;
 
-  CoffeeProduct(String id, String name, double price, this.image)
-      : super(id, name, price);
+  CoffeeProduct(super.id, super.name, super.price, this.image);
 
   @override
   String getCategory() => "Coffee";
@@ -43,8 +42,7 @@ class CoffeeProduct extends Product {
 class FoodProduct extends Product {
   String image;
 
-  FoodProduct(String id, String name, double price, this.image)
-      : super(id, name, price);
+  FoodProduct(super.id, super.name, super.price, this.image);
 
   @override
   String getCategory() => "Food";

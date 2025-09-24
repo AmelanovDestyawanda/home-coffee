@@ -1,3 +1,4 @@
+import 'package:brew_verse/models/menu_screen.dart';
 import 'package:brew_verse/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
@@ -26,6 +27,7 @@ class BrewVerseApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/main': (context) => const MainNavigation(),
+        '/home': (context) => const MenuScreen(),
       },
     );
   }

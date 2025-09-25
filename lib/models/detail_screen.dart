@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../data/product.dart';
+import '../provider/cart_provider.dart';
 
 class DetailScreen extends StatelessWidget {
   final Product product;
@@ -8,7 +10,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String image = "";
+    String image = "assets/images/amer.jpg";
     if (product is CoffeeProduct) image = (product as CoffeeProduct).image;
     if (product is FoodProduct) image = (product as FoodProduct).image;
 
@@ -19,7 +21,14 @@ class DetailScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Image.asset(image, height: 200, fit: BoxFit.cover),
+          Hero(
+            tag: product.id,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(30)),
+              child: Image.asset(image,
+                  height: 250, width: double.infinity, fit: BoxFit.cover),
+            ),
+          ),
           const SizedBox(height: 20),
           Text(product.name,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
@@ -39,10 +48,20 @@ class DetailScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.brown,
                       padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                     onPressed: () {
+                      Provider.of<CartProvider>(context, listen: false)
+                          .addToCart(product);
+
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("${product.name} ditambahkan ke keranjang")),
+                        SnackBar(
+                          content: Text("${product.name} ditambahkan ke keranjang"),
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                        ),
                       );
                     },
                   ),
@@ -54,6 +73,8 @@ class DetailScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(

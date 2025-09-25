@@ -1,16 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:brew_verse/models/menu_screen.dart';
 import 'package:brew_verse/splash_screen.dart';
-import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 import 'models/main_navigation.dart';
+import 'provider/cart_provider.dart';
+import 'models/cart_screen.dart';
 
 void main() {
-  runApp(const BrewVerseApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => CartProvider(),
+      child: const HomeCoffeeApp(),
+    ),
+  );
 }
 
-class BrewVerseApp extends StatelessWidget {
-  const BrewVerseApp({super.key});
+class HomeCoffeeApp extends StatelessWidget {
+  const HomeCoffeeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +37,7 @@ class BrewVerseApp extends StatelessWidget {
         '/register': (context) => const RegisterScreen(),
         '/main': (context) => const MainNavigation(),
         '/home': (context) => const MenuScreen(),
+        '/cart': (context) => const CartScreen(),
       },
     );
   }

@@ -7,47 +7,84 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = [
+      {
+        "title": "Coffee",
+        "icon": Icons.coffee,
+        "color": Colors.brown,
+        "products": coffeeMenu,
+      },
+      {
+        "title": "Food",
+        "icon": Icons.fastfood,
+        "color": Colors.orange,
+        "products": foodMenu,
+      },
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Menu"),
+        title: const Text("Home Coffee Menu"),
         backgroundColor: Colors.brown,
         centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.coffee, color: Colors.brown),
-            title: const Text("Coffee"),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(16),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          childAspectRatio: 1,
+        ),
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          final category = categories[index];
+          return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (_) => MenuListScreen(
-                    title: "Coffee",
-                    products: coffeeMenu,
+                    title: category["title"] as String,
+                    products: category["products"] as List<Product>,
                   ),
                 ),
               );
             },
-          ),
-          ListTile(
-            leading: const Icon(Icons.fastfood, color: Colors.orange),
-            title: const Text("Food"),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => MenuListScreen(
-                    title: "Food",
-                    products: foodMenu,
+            child: Container(
+              decoration: BoxDecoration(
+                // ignore: deprecated_member_use
+                color: (category["color"] as Color).withOpacity(0.15),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 6,
+                    offset: const Offset(0, 4),
                   ),
-                ),
-              );
-            },
-          ),
-        ],
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    category["icon"] as IconData,
+                    size: 60,
+                    color: category["color"] as Color,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    category["title"] as String,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

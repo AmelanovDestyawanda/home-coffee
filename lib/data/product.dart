@@ -50,13 +50,13 @@ class FoodProduct extends Product {
 
 // ================= Dummy Data =================
 final coffeeMenu = [
-  CoffeeProduct("c1", "Latte", 28000, "assets/images/latte.png"),
-  CoffeeProduct("c2", "Cappuccino", 25000, "assets/images/cappuccino.png"),
-  CoffeeProduct("c3", "Americano", 22000, "assets/images/americano.png"),
+  CoffeeProduct("c1", "Latte", 28000, "assets/images/latte.jpg"),
+  CoffeeProduct("c2", "Cappuccino", 25000, "assets/images/cappucino.jpg"),
+  CoffeeProduct("c3", "Americano", 22000, "assets/images/amer.jpg"),
 ];
 
 final foodMenu = [
-  FoodProduct("f1", "Brownies", 15000, "assets/images/brownies.png"),
-  FoodProduct("f2", "Croissant", 18000, "assets/images/croissant.png"),
-  FoodProduct("f3", "Muffin", 12000, "assets/images/muffin.png"),
+  FoodProduct("f1", "Brownies", 15000, "assets/images/brownis.jpg"),
+  FoodProduct("f2", "Croissant", 18000, "assets/images/croissant.jpg"),
+  FoodProduct("f3", "Muffin", 12000, "assets/images/muffin.jpg"),
 ];

@@ -53,13 +53,13 @@ class _SplashScreenState extends State<SplashScreen>
               children: const [
                 Icon(Icons.coffee, size: 120, color: Colors.white),
                 SizedBox(height: 20),
-                Text("Brew Verse",
+                Text("Home Coffee",
                     style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.white)),
                 SizedBox(height: 10),
-                Text("By: Amelanov Destyaw",
+                Text("By: Meyya",
                     style: TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,

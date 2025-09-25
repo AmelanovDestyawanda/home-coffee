@@ -7,25 +7,25 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final promos = [
-      {"title": "Diskon 20% Semua Kopi", "image": "assets/images/latte.png"},
+      {"title": "Diskon 20% Semua Kopi", "image": "assets/images/latte.jpg"},
       {
         "title": "Buy 1 Get 1 Cappuccino",
-        "image": "assets/images/cappuccino.png",
+        "image": "assets/images/cappucino.jpg",
       },
-      {"title": "Gratis Brownies", "image": "assets/images/brownies.png"},
+      {"title": "Gratis Brownies", "image": "assets/images/brownis.jpg"},
     ];
 
     final bestSeller = [
-      {"name": "Latte", "price": 28000, "image": "assets/images/latte.png"},
+      {"name": "Latte", "price": 28000, "image": "assets/images/latte.jpg"},
       {
         "name": "Cappuccino",
         "price": 25000,
-        "image": "assets/images/cappuccino.png",
+        "image": "assets/images/cappucino.jpg",
       },
       {
         "name": "Americano",
         "price": 22000,
-        "image": "assets/images/americano.png",
+        "image": "assets/images/amer.jpg",
       },
     ];
 
@@ -33,12 +33,12 @@ class HomeScreen extends StatelessWidget {
       {
         "name": "Espresso Panas",
         "price": 20000,
-        "image": "assets/images/espresso.png",
+        "image": "assets/images/espresso.jpg",
       },
       {
         "name": "Iced Coffee",
         "price": 23000,
-        "image": "assets/images/iced_coffee.png",
+        "image": "assets/images/icedcoffe.jpg",
       },
     ];
 
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.brown,
         elevation: 0,
         centerTitle: true,
-        title: const Text("Brew Verse", style: TextStyle(color: Colors.white)),
+        title: const Text("Home Coffee", style: TextStyle(color: Colors.white)),
       ),
       body: SingleChildScrollView(
         child: Column(

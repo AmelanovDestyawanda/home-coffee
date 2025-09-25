@@ -19,7 +19,14 @@ class MenuListScreen extends StatelessWidget {
         title: Text(title),
         backgroundColor: Colors.brown,
       ),
-      body: ListView.builder(
+      body: GridView.builder(
+        padding: const EdgeInsets.all(16),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          childAspectRatio: 0.75,
+        ),
         itemCount: products.length,
         itemBuilder: (context, index) {
           final item = products[index];
@@ -27,21 +34,70 @@ class MenuListScreen extends StatelessWidget {
           if (item is CoffeeProduct) image = item.image;
           if (item is FoodProduct) image = item.image;
 
-          return Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: ListTile(
-              leading: Image.asset(image, width: 50, fit: BoxFit.cover),
-              title: Text(item.name),
-              subtitle: Text("Rp ${item.price.toInt()}"),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => DetailScreen(product: item),
-                  ),
-                );
-              },
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => DetailScreen(product: item),
+                ),
+              );
+            },
+            child: Hero(
+              tag: item.id,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    // 📸 Gambar kotak
+                    Container(
+                      width: double.infinity,
+                      height: 120,
+                      color: Colors.grey[200],
+                      child: Image.asset(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    // 📋 Info Produk
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "Rp ${item.price.toInt()}",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.brown,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           );
         },

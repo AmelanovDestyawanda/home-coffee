@@ -7,11 +7,6 @@ import 'register_screen.dart';
 import 'models/main_navigation.dart';
 import 'provider/cart_provider.dart';
 import 'models/cart_screen.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
 
 void main() {
   runApp(

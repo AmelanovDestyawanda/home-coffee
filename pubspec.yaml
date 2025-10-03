@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
     
-  getwidget: ^4.0.0
+  getwidget: ^3.1.1
   device_info_plus: ^10.1.0
   webview_flutter: ^4.7.0
   shared_preferences: ^2.2.2

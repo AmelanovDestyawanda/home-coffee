@@ -1,134 +1,242 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/user_provider.dart';
 import 'package:home/data/bestseller_dummy.dart';
+import 'package:home/data/coffe_dummy.dart';
+import 'package:home/data/food_dummy.dart';
 import 'package:home/data/promos_dummy.dart';
 import 'package:home/data/rekomendasi_dummy.dart';
 import 'package:home/screens/home_detail_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:home/screens/menu_list_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final PageController _pageController = PageController(viewportFraction: 0.9);
+  int _currentPage = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+      if (!mounted) return;
+      _currentPage = (_currentPage + 1) % promos.length;
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        backgroundColor: Colors.brown,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Home Coffee",
-          style: GoogleFonts.pacifico(color: Colors.white),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // --- Bagian Promo Tanpa Carousel ---
-            sectionTitle("Promo Spesial Untukmu"),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: promos.map((promo) => promoCard(promo)).toList(),
-              ),
-            ),
+      // Mengganti AppBar dengan body langsung agar lebih leluasa
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              // --- HEADER BARU YANG LEBIH BAIK ---
+              _buildWelcomeHeader(context),
+              const SizedBox(height: 24),
+              
+              // --- SEARCH BAR ---
+              _buildSearchBar(context),
+              const SizedBox(height: 32),
 
-            const SizedBox(height: 20),
+              // --- PROMO SLIDER ---
+              _buildPromoSlider(),
+              const SizedBox(height: 32),
 
-            // --- Best Seller ---
-            sectionTitle("Best Seller", onSeeAll: () {}),
-            SizedBox(
-              height: 240,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(left: 8),
-                itemCount: bestSeller.length,
-                itemBuilder: (context, index) {
-                  final item = bestSeller[index];
-                  return menuCard(context, item);
-                },
-              ),
-            ),
+              // --- BEST SELLER ---
+              _buildSectionTitle(context, "Best Seller", () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => MenuListScreen(title: "Best Seller", products: [...coffeeMenu, ...foodMenu]..shuffle())));
+              }),
+              _buildHorizontalProductList(bestSeller),
+              const SizedBox(height: 24),
 
-            // --- Rekomendasi ---
-            sectionTitle("Rekomendasi untuk Kamu", onSeeAll: () {}),
-            SizedBox(
-              height: 240,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(left: 8),
-                itemCount: rekomendasi.length,
-                itemBuilder: (context, index) {
-                  final item = rekomendasi[index];
-                  return menuCard(context, item);
-                },
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
-
-
-  // Widget untuk kartu promo
-  Widget promoCard(Map<String, String> promo) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-      child: Container(
-        height: 150,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          image: DecorationImage(
-            image: AssetImage(promo["image"]!),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.4),
-              BlendMode.darken,
-            ),
-          ),
-        ),
-        child: Center(
-          child: Text(
-            promo["title"]!,
-            style: GoogleFonts.lato(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.center,
+              // --- REKOMENDASI ---
+              _buildSectionTitle(context, "Rekomendasi", () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => MenuListScreen(title: "Rekomendasi", products: [...coffeeMenu, ...foodMenu]..shuffle())));
+              }),
+              _buildHorizontalProductList(rekomendasi),
+              const SizedBox(height: 24),
+            ],
           ),
         ),
       ),
     );
   }
 
-  
-
-  // Widget untuk judul section
-  Widget sectionTitle(String title, {VoidCallback? onSeeAll}) {
+  // WIDGET UNTUK HEADER SELAMAT DATANG
+  Widget _buildWelcomeHeader(BuildContext context) {
+    final userName = Provider.of<UserProvider>(context).userName;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Halo, $userName 👋",
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+              ),
+              Text(
+                "Selamat menikmati harimu!",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Colors.black54,
+                    ),
+              ),
+            ],
+          ),
+          // Ikon Notifikasi atau Profil
+          const CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Icon(Icons.notifications_none, color: Color(0xFF6F4E37)),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  // WIDGET UNTUK SEARCH BAR
+  Widget _buildSearchBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: "Cari kopi favoritmu...",
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  // WIDGET UNTUK SLIDER PROMO
+  Widget _buildPromoSlider() {
+    return SizedBox(
+      height: 180,
+      child: PageView.builder(
+        controller: _pageController,
+        itemCount: promos.length,
+        itemBuilder: (context, index) {
+          final promo = promos[index];
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: DecorationImage(
+                image: AssetImage(promo["image"]!),
+                fit: BoxFit.cover,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.15),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                )
+              ],
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ),
+              ),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    promo["title"]!,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  // WIDGET UNTUK JUDUL SECTION
+  Widget _buildSectionTitle(BuildContext context, String title, VoidCallback onSeeAll) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
-            style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
           ),
-          if (onSeeAll != null)
-            TextButton(onPressed: onSeeAll, child: const Text("Lihat Semua")),
+          TextButton(
+            onPressed: onSeeAll,
+            child: const Text("Lihat Semua"),
+          ),
         ],
       ),
     );
   }
 
-  // Widget untuk kartu menu
-  Widget menuCard(BuildContext context, Map<String, dynamic> item) {
+  // WIDGET UNTUK DAFTAR PRODUK HORIZONTAL
+  Widget _buildHorizontalProductList(List<Map<String, dynamic>> products) {
+    return SizedBox(
+      height: 260,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final item = products[index];
+          final heroTag = '${item["name"]}_${item["id"] ?? UniqueKey()}';
+          return _buildProductCard(context, item, heroTag);
+        },
+      ),
+    );
+  }
+
+  // WIDGET UNTUK KARTU PRODUK
+  Widget _buildProductCard(BuildContext context, Map<String, dynamic> item, Object heroTag) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -138,59 +246,64 @@ class HomeScreen extends StatelessWidget {
               name: item["name"] as String,
               price: item["price"] as int,
               image: item["image"] as String,
+              heroTag: heroTag,
             ),
           ),
         );
       },
       child: Container(
-        width: 170,
-        margin: const EdgeInsets.symmetric(horizontal: 8),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 4,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(16),
-                ),
-                child: Image.asset(
-                  item["image"]!,
-                  height: 140,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item["name"]!,
-                      style: GoogleFonts.lato(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      "Rp ${item["price"]}",
-                      style: GoogleFonts.lato(
-                        color: Colors.brown,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+        width: 180,
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Hero(
+                tag: heroTag,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                  child: Image.asset(
+                    item["image"]!,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item["name"]!,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    "Rp ${item["price"]}",
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

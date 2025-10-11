@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/user_provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -26,9 +28,10 @@ class _RegisterScreenState extends State<RegisterScreen>
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 5))
-          ..repeat(reverse: true);
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..repeat(reverse: true);
 
     _color1 = ColorTween(
       begin: Colors.brown[300],
@@ -56,6 +59,13 @@ class _RegisterScreenState extends State<RegisterScreen>
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
+
+    Provider.of<UserProvider>(
+      context,
+      listen: false,
+    ).updateUser(nameController.text);
+
+    Navigator.pushReplacementNamed(context, '/main');
 
     if (name.isEmpty || email.isEmpty || password.isEmpty) {
       setState(() {
@@ -114,10 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                         child: Column(
                           children: [
                             // Logo
-                            Image.asset(
-                              "assets/images/logoo.png",
-                              height: 70,
-                            ),
+                            Image.asset("assets/images/logoo.png", height: 70),
                             const SizedBox(height: 12),
 
                             const Text(
@@ -214,7 +221,9 @@ class _RegisterScreenState extends State<RegisterScreen>
                               Text(
                                 errorMessage!,
                                 style: const TextStyle(
-                                    color: Colors.red, fontSize: 13),
+                                  color: Colors.red,
+                                  fontSize: 13,
+                                ),
                               ),
 
                             const SizedBox(height: 20),
@@ -225,8 +234,9 @@ class _RegisterScreenState extends State<RegisterScreen>
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.brown,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 14),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),
@@ -235,7 +245,9 @@ class _RegisterScreenState extends State<RegisterScreen>
                                 child: const Text(
                                   "Register",
                                   style: TextStyle(
-                                      fontSize: 16, color: Colors.white),
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),

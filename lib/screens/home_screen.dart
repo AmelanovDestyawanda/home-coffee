@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/user_provider.dart';
@@ -100,10 +101,11 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 "Halo, $userName 👋",
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: GoogleFonts.pacifico(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                  ),
               ),
               Text(
                 "Selamat menikmati harimu!",

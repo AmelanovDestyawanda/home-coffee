@@ -44,18 +44,19 @@ class CartScreen extends StatelessWidget {
 
   Widget _buildCartItemCard(BuildContext context, CartItem cartItem) {
     final cart = Provider.of<CartProvider>(context, listen: false);
+    final theme = Theme.of(context);
     String imagePath = cartItem.product.image ?? "assets/images/amer.jpg";
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      elevation: 3,
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      elevation: 4,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
               child: Image.asset(
                 imagePath,
                 width: 80,
@@ -65,49 +66,76 @@ class CartScreen extends StatelessWidget {
                     const Icon(Icons.coffee, size: 50),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     cartItem.product.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   Text(
                     "Rp ${cartItem.product.price.toInt()}",
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: 14,
+                      color: theme.colorScheme.primary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
             ),
-            // KONTROL KUANTITAS DI KERANJANG
+            
+            // --- KONTROL KUANTITAS BARU YANG PASTI TERLIHAT ---
             Row(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.remove_circle_outline),
-                  onPressed: () {
-                    cart.removeSingleItem(cartItem.product.id);
-                  },
+                // Tombol Minus
+                SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: IconButton.filled(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.remove, size: 16),
+                    onPressed: () => cart.removeSingleItem(cartItem.product.id),
+                    style: IconButton.styleFrom(
+                      backgroundColor: theme.scaffoldBackgroundColor,
+                      foregroundColor: theme.colorScheme.primary,
+                    ),
+                  ),
                 ),
-                Text(
-                  cartItem.quantity.toString(),
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                // Angka Kuantitas
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    cartItem.quantity.toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.add_circle_outline),
-                  onPressed: () {
-                    cart.addToCart(cartItem.product);
-                  },
+                // Tombol Plus
+                SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: IconButton.filled(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.add, size: 16),
+                    onPressed: () => cart.addToCart(cartItem.product),
+                    style: IconButton.styleFrom(
+                      backgroundColor: theme.colorScheme.primary,
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
                 ),
               ],
-            )
+            ),
+            // Tombol Hapus
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Colors.red),
+              onPressed: () => cart.removeItem(cartItem.product.id),
+            ),
           ],
         ),
       ),

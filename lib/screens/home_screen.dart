@@ -100,25 +100,22 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Halo, $userName 👋",
+                "Halo, $userName",
                 style: GoogleFonts.pacifico(
-                    fontSize: 40,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: const Color.fromARGB(255, 0, 0, 0),
                   ),
               ),
               Text(
                 "Selamat menikmati harimu!",
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.black54,
-                    ),
+                style: GoogleFonts.lato(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                      ),
               ),
             ],
-          ),
-          // Ikon Notifikasi atau Profil
-          const CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(Icons.notifications_none, color: Color(0xFF6F4E37)),
           ),
         ],
       ),

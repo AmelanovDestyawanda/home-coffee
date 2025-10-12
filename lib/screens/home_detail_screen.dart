@@ -87,5 +87,4 @@ class HomeDetailScreen extends StatelessWidget {
       ),
     );
   }
-  
 }

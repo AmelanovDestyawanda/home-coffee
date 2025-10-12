@@ -43,7 +43,7 @@ class MenuListScreen extends StatelessWidget {
     // Ambil path gambar dari produk
     String imagePath = "assets/images/amer.jpg"; // Default image
     if (product.image.isNotEmpty) {
-      imagePath = product.image;
+      imagePath = product.image!;
     }
 
     return GestureDetector(

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/user_provider.dart';
+import 'order_history_screen.dart'; // Buat file ini nanti
+import 'member_status_screen.dart'; // Buat file ini nanti
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -12,6 +16,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -26,17 +32,15 @@ class ProfileScreen extends StatelessWidget {
               backgroundImage: AssetImage("assets/images/profile.png"),
             ),
             const SizedBox(height: 16),
-            const Text(
-              "MEYYA",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              userProvider.userName, // Gunakan nama dari provider
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const Text(
-              "user@brewverse.com",
-              style: TextStyle(color: Colors.grey),
+            Text(
+              userProvider.userEmail, // Gunakan email dari provider
+              style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 30),
-
-            // Card info tambahan
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
@@ -46,7 +50,13 @@ class ProfileScreen extends StatelessWidget {
                 title: const Text("Member Status"),
                 subtitle: const Text("Gold Member"),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MemberStatusScreen()),
+                  );
+                },
               ),
             ),
             Card(
@@ -58,12 +68,16 @@ class ProfileScreen extends StatelessWidget {
                 title: const Text("Order History"),
                 subtitle: const Text("Lihat riwayat pesanan"),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const OrderHistoryScreen()),
+                  );
+                },
               ),
             ),
             const Spacer(),
-
-            // Tombol Logout
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(

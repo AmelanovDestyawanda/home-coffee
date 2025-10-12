@@ -1,15 +1,15 @@
 import 'dart:async';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../data/bestseller_dummy.dart';
+import '../data/coffe_dummy.dart';
+import '../data/food_dummy.dart';
+import '../data/promos_dummy.dart';
+import '../data/rekomendasi_dummy.dart';
 import '../provider/user_provider.dart';
-import 'package:home/data/bestseller_dummy.dart';
-import 'package:home/data/coffe_dummy.dart';
-import 'package:home/data/food_dummy.dart';
-import 'package:home/data/promos_dummy.dart';
-import 'package:home/data/rekomendasi_dummy.dart';
-import 'package:home/screens/home_detail_screen.dart';
-import 'package:home/screens/menu_list_screen.dart';
+import 'home_detail_screen.dart';
+import 'menu_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,35 +49,35 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Mengganti AppBar dengan body langsung agar lebih leluasa
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              // --- HEADER BARU YANG LEBIH BAIK ---
               _buildWelcomeHeader(context),
               const SizedBox(height: 24),
-              
-              // --- SEARCH BAR ---
               _buildSearchBar(context),
               const SizedBox(height: 32),
-
-              // --- PROMO SLIDER ---
               _buildPromoSlider(),
               const SizedBox(height: 32),
-
-              // --- BEST SELLER ---
               _buildSectionTitle(context, "Best Seller", () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => MenuListScreen(title: "Best Seller", products: [...coffeeMenu, ...foodMenu]..shuffle())));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MenuListScreen(
+                            title: "Best Seller",
+                            products: [...coffeeMenu, ...foodMenu]..shuffle())));
               }),
               _buildHorizontalProductList(bestSeller),
               const SizedBox(height: 24),
-
-              // --- REKOMENDASI ---
               _buildSectionTitle(context, "Rekomendasi", () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => MenuListScreen(title: "Rekomendasi", products: [...coffeeMenu, ...foodMenu]..shuffle())));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MenuListScreen(
+                            title: "Rekomendasi",
+                            products: [...coffeeMenu, ...foodMenu]..shuffle())));
               }),
               _buildHorizontalProductList(rekomendasi),
               const SizedBox(height: 24),
@@ -88,8 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // WIDGET UNTUK HEADER SELAMAT DATANG
   Widget _buildWelcomeHeader(BuildContext context) {
+    // Menggunakan UserProvider untuk mendapatkan nama pengguna
     final userName = Provider.of<UserProvider>(context).userName;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -101,19 +101,20 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 "Halo, $userName",
+                // Menggunakan GoogleFonts
                 style: GoogleFonts.pacifico(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 0, 0, 0),
-                  ),
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                ),
               ),
               Text(
                 "Selamat menikmati harimu!",
                 style: GoogleFonts.lato(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                      ),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                ),
               ),
             ],
           ),
@@ -121,8 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  
-  // WIDGET UNTUK SEARCH BAR
+
   Widget _buildSearchBar(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -141,7 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // WIDGET UNTUK SLIDER PROMO
   Widget _buildPromoSlider() {
     return SizedBox(
       height: 180,
@@ -195,8 +194,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // WIDGET UNTUK JUDUL SECTION
-  Widget _buildSectionTitle(BuildContext context, String title, VoidCallback onSeeAll) {
+  Widget _buildSectionTitle(
+      BuildContext context, String title, VoidCallback onSeeAll) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
@@ -217,7 +216,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // WIDGET UNTUK DAFTAR PRODUK HORIZONTAL
   Widget _buildHorizontalProductList(List<Map<String, dynamic>> products) {
     return SizedBox(
       height: 260,
@@ -234,8 +232,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // WIDGET UNTUK KARTU PRODUK
-  Widget _buildProductCard(BuildContext context, Map<String, dynamic> item, Object heroTag) {
+  Widget _buildProductCard(
+      BuildContext context, Map<String, dynamic> item, Object heroTag) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -271,7 +269,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Hero(
                 tag: heroTag,
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(20)),
                   child: Image.asset(
                     item["image"]!,
                     width: double.infinity,
@@ -287,7 +286,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     item["name"]!,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

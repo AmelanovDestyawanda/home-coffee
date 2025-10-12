@@ -8,7 +8,7 @@ import 'screens/register_screen.dart';
 import 'main_navigation.dart';
 import 'provider/cart_provider.dart';
 import 'screens/cart_screen.dart';
-
+import 'package:home/provider/order_provider.dart';
 // Palet Warna
 const Color primaryColor = Color(0xFF6F4E37); 
 const Color secondaryColor = Color(0xFFF5F5DC); 
@@ -18,8 +18,9 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => OrderProvider()), // Tambahkan ini
       ],
       child: const HomeCoffeeApp(),
     ),

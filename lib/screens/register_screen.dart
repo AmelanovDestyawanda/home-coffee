@@ -60,22 +60,25 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
   }
 
   void _register() {
-    if (nameController.text.isEmpty || emailController.text.isEmpty || passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Semua kolom wajib diisi!")),
-      );
-      return;
-    }
-    if (passwordController.text != confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Password dan konfirmasi tidak cocok!")),
-      );
-      return;
-    }
-    
-    Provider.of<UserProvider>(context, listen: false).updateUser(nameController.text);
-    Navigator.pushReplacementNamed(context, '/main');
+  if (nameController.text.isEmpty ||
+      emailController.text.isEmpty ||
+      passwordController.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Semua kolom wajib diisi!")),
+    );
+    return;
   }
+  if (passwordController.text != confirmPasswordController.text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Password dan konfirmasi tidak cocok!")),
+    );
+    return;
+  }
+
+  Provider.of<UserProvider>(context, listen: false)
+      .updateUser(nameController.text, emailController.text);
+  Navigator.pushReplacementNamed(context, '/main');
+}
 
   @override
   Widget build(BuildContext context) {

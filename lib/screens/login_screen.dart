@@ -15,16 +15,17 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
 
   void _login() {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Email dan password harus diisi!")),
-      );
-      return;
-    }
-    final email = emailController.text.split('@').first;
-    Provider.of<UserProvider>(context, listen: false).updateUser(email);
-    Navigator.pushReplacementNamed(context, '/main');
+  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Email dan password harus diisi!")),
+    );
+    return;
   }
+  final email = emailController.text;
+  final name = email.split('@').first; // Ambil nama dari email
+  Provider.of<UserProvider>(context, listen: false).updateUser(name, email);
+  Navigator.pushReplacementNamed(context, '/main');
+}
 
   @override
   Widget build(BuildContext context) {

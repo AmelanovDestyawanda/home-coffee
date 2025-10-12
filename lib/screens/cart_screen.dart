@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/cart_item.dart';
 import '../provider/cart_provider.dart';
+import 'package:home/screens/checkout_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -141,9 +142,9 @@ class CartScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              // Fungsi checkout akan ditambahkan di tahap berikutnya
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Fitur Checkout segera hadir!")),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CheckoutScreen()),
               );
             },
             child: const Text("Checkout"),

@@ -4,7 +4,7 @@ abstract class Product {
   String _name;
   double _price;
 
-  Product(this._id, this._name, this._price);
+  Product(this._id, this._name, this._price, String item);
 
   // Getter
   String get id => _id;

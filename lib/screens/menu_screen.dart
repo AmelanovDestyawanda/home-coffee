@@ -13,7 +13,7 @@ class MenuScreen extends StatelessWidget {
       {
         "title": "Coffee",
         "icon": Icons.coffee,
-        "color": Colors.brown,
+        "color": Theme.of(context).colorScheme.primary, // Menggunakan primaryColor
         "products": coffeeMenu,
       },
       {
@@ -27,21 +27,22 @@ class MenuScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home Coffee Menu"),
-        backgroundColor: Colors.brown,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         centerTitle: true,
       ),
       body: GridView.builder(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
           childAspectRatio: 1,
         ),
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final category = categories[index];
-          return GestureDetector(
+          return InkWell( // Menggunakan InkWell untuk efek sentuhan
             onTap: () {
               Navigator.push(
                 context,
@@ -53,34 +54,26 @@ class MenuScreen extends StatelessWidget {
                 ),
               );
             },
+            borderRadius: BorderRadius.circular(25),
             child: Container(
               decoration: BoxDecoration(
-                // ignore: deprecated_member_use
-                color: (category["color"] as Color).withOpacity(0.15),
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                color: (category["color"] as Color).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(25),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     category["icon"] as IconData,
-                    size: 60,
+                    size: 65,
                     color: category["color"] as Color,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 15),
                   Text(
                     category["title"] as String,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ],
               ),

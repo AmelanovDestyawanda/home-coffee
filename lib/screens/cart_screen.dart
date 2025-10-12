@@ -12,15 +12,17 @@ class CartScreen extends StatelessWidget {
     final cartItems = cart.cartItems.values.toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Keranjang Saya"),
-      ),
+      appBar: AppBar(title: const Text("Keranjang Saya")),
       body: cart.itemCount == 0
           ? const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.shopping_cart_outlined, size: 80, color: Colors.grey),
+                  Icon(
+                    Icons.shopping_cart_outlined,
+                    size: 80,
+                    color: Colors.grey,
+                  ),
                   SizedBox(height: 16),
                   Text(
                     "Keranjangmu masih kosong",
@@ -48,93 +50,57 @@ class CartScreen extends StatelessWidget {
     String imagePath = cartItem.product.image ?? "assets/images/amer.jpg";
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
+      elevation: 2,
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(12),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Image.asset(
+            imagePath,
+            width: 70,
+            height: 70,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.coffee, size: 50),
+          ),
+        ),
+        title: Text(
+          cartItem.product.name,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        subtitle: Text(
+          "Rp ${cartItem.product.price.toInt()}",
+          style: TextStyle(
+            color: theme.colorScheme.primary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                imagePath,
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.coffee, size: 50),
+            SizedBox(
+              width: 30,
+              height: 30,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(Icons.remove, size: 16),
+                onPressed: () => cart.removeSingleItem(cartItem.product.id),
               ),
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    cartItem.product.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    "Rp ${cartItem.product.price.toInt()}",
-                    style: TextStyle(
-                      color: theme.colorScheme.primary,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+            Text(
+              cartItem.quantity.toString(),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            SizedBox(
+              width: 30,
+              height: 30,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(Icons.add, size: 16),
+                onPressed: () => cart.addToCart(cartItem.product),
               ),
-            ),
-            
-            // --- KONTROL KUANTITAS BARU YANG PASTI TERLIHAT ---
-            Row(
-              children: [
-                // Tombol Minus
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: IconButton.filled(
-                    padding: EdgeInsets.zero,
-                    icon: const Icon(Icons.remove, size: 16),
-                    onPressed: () => cart.removeSingleItem(cartItem.product.id),
-                    style: IconButton.styleFrom(
-                      backgroundColor: theme.scaffoldBackgroundColor,
-                      foregroundColor: theme.colorScheme.primary,
-                    ),
-                  ),
-                ),
-                // Angka Kuantitas
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    cartItem.quantity.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
-                // Tombol Plus
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: IconButton.filled(
-                    padding: EdgeInsets.zero,
-                    icon: const Icon(Icons.add, size: 16),
-                    onPressed: () => cart.addToCart(cartItem.product),
-                    style: IconButton.styleFrom(
-                      backgroundColor: theme.colorScheme.primary,
-                      foregroundColor: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            // Tombol Hapus
-            IconButton(
-              icon: const Icon(Icons.delete_outline, color: Colors.red),
-              onPressed: () => cart.removeItem(cartItem.product.id),
             ),
           ],
         ),
@@ -166,7 +132,10 @@ class CartScreen extends StatelessWidget {
               const Text("Total Harga", style: TextStyle(color: Colors.grey)),
               Text(
                 "Rp ${totalPrice.toInt()}",
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ],
           ),

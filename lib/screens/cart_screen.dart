@@ -47,7 +47,7 @@ class CartScreen extends StatelessWidget {
   Widget _buildCartItemCard(BuildContext context, CartItem cartItem) {
     final cart = Provider.of<CartProvider>(context, listen: false);
     final theme = Theme.of(context);
-    String imagePath = cartItem.product.image ?? "assets/images/amer.jpg";
+    String imagePath = cartItem.product.image;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

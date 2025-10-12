@@ -1,11 +1,12 @@
-// Food Product
+// lib/data/food_dummy.dart
+
 import 'package:home/models/product.dart';
 
 class FoodProduct extends Product {
-  @override
-  String image;
-
-  FoodProduct(super.id, super.name, super.price, this.image);
+  // 'image' sudah ada di class Product, jadi tidak perlu ditulis ulang.
+  // Constructor di bawah ini sudah diperbaiki agar sesuai dengan parent class.
+  FoodProduct(String id, String name, double price, String image)
+      : super(id, name, price, image);
 
   @override
   String getCategory() => "Food";

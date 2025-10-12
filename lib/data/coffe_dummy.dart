@@ -1,15 +1,15 @@
-// Coffee Product
+// lib/data/coffe_dummy.dart
+
 import 'package:home/models/product.dart';
 
 class CoffeeProduct extends Product {
-  @override
-  String image;
-
-  CoffeeProduct(super.id, super.name, super.price, this.image);
+  CoffeeProduct(String id, String name, double price, String image)
+      : super(id, name, price, image);
 
   @override
   String getCategory() => "Coffee";
 }
+
 
 // ================= Dummy Data =================
 final coffeeMenu = [

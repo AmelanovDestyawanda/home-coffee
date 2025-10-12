@@ -30,7 +30,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String imagePath = widget.product.image ?? "assets/images/amer.jpg";
+    String imagePath = widget.product.image;
 
     return Scaffold(
       body: CustomScrollView(

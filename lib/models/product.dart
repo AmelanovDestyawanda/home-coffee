@@ -1,17 +1,16 @@
-// Abstract Product
 abstract class Product {
   String _id;
   String _name;
   double _price;
+  String _image;
 
-  Product(this._id, this._name, this._price, String item);
+  Product(this._id, this._name, this._price, this._image);
 
   // Getter
   String get id => _id;
   String get name => _name;
   double get price => _price;
-
-  String? get image => null;
+  String get image => _image;
 
   // Setter
   set id(String value) {

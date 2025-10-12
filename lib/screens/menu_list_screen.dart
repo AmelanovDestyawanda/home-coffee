@@ -42,8 +42,8 @@ class MenuListScreen extends StatelessWidget {
   Widget _buildProductGridCard(BuildContext context, Product product) {
     // Ambil path gambar dari produk
     String imagePath = "assets/images/amer.jpg"; // Default image
-    if (product.image != null && product.image!.isNotEmpty) {
-      imagePath = product.image!;
+    if (product.image.isNotEmpty) {
+      imagePath = product.image;
     }
 
     return GestureDetector(

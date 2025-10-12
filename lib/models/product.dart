@@ -12,6 +12,8 @@ abstract class Product {
   double get price => _price;
   String get image => _image;
 
+  get description => null;
+
   // Setter
   set id(String value) {
     if (value.isNotEmpty) _id = value;

@@ -29,4 +29,6 @@ abstract class Product {
 
   // Polymorphism
   String getCategory();
+
+  static fromMap(Map<String, dynamic> productData) {}
 }

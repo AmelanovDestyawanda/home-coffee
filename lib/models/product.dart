@@ -6,7 +6,6 @@ abstract class Product {
   String _image;
   String _description;
 
-  // Constructor
   Product({
     required String id,
     required String name,
@@ -30,12 +29,10 @@ abstract class Product {
       _name = value;
     }
   }
-
   set price(double value) {
     if (value > 0) {
       _price = value;
     }
   }
-
   String getCategory();
 }

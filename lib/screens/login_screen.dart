@@ -68,20 +68,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   icon: Icons.email_outlined,
                 ),
                 const SizedBox(height: 20),
-                // --- PERBAIKAN DI SINI ---
                 _buildTextField(
                   controller: passwordController,
                   labelText: "Password",
                   icon: Icons.lock_outline,
                   obscureText: _obscurePassword,
-                  isPassword: true, // Tandai sebagai field password
-                  onSuffixIconPressed: () { // Tambahkan fungsi untuk toggle
+                  isPassword: true, 
+                  onSuffixIconPressed: () {
                     setState(() {
                       _obscurePassword = !_obscurePassword;
                     });
                   },
                 ),
-                // --- AKHIR PERBAIKAN ---
                 const SizedBox(height: 40),
                 SizedBox(
                   width: double.infinity,

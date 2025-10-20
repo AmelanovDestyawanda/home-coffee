@@ -2,8 +2,7 @@ final List<Map<String, dynamic>> bestSeller = [
   {
     'id': 'c2',
     'name': 'Cappuccino',
-    // ===== PERBAIKAN DI SINI =====
-    'price': 25000, // Tanda kutip dihapus
+    'price': 25000, 
     'image': 'assets/images/cappucino.jpg',
   },
   {
@@ -21,8 +20,7 @@ final List<Map<String, dynamic>> bestSeller = [
   {
     'id': 'f3',
     'name': 'Muffin',
-    // ===== PERBAIKAN DI SINI =====
-    'price': 15000, // Tanda kutip dihapus
+    'price': 15000,
     'image': 'assets/images/muffin.jpg',
   }
 ];

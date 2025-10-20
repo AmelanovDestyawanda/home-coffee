@@ -1,24 +1,27 @@
-import 'package:home/models/product.dart';
+// lib/models/coffee.dart
+
+import 'product.dart';
 
 class Coffee extends Product {
-  String _size;
-  String _image;
-
-  Coffee(String id, String name, double price, this._size, this._image)
-      : super(id, name, price, _image);
-
-  String get size => _size;
-  @override
-  String get image => _image;
-
-  set size(String value) {
-    if (value.isNotEmpty) _size = value;
-  }
-
-  set image(String value) {
-    if (value.isNotEmpty) _image = value;
-  }
+  // Constructor
+  Coffee({
+    required String id,
+    required String name,
+    required double price,
+    required String image,
+  }) : super(id, name, price, image);
 
   @override
   String getCategory() => "Coffee";
+
+  // Factory constructor untuk membuat objek Coffee dari Map
+  factory Coffee.fromMap(Map<String, dynamic> data) {
+    return Coffee(
+      id: data['id'],
+      name: data['name'],
+      // Konversi ke double dengan aman
+      price: (data['price'] as num).toDouble(), 
+      image: data['image'],
+    );
+  }
 }

@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onSearchChanged() {
     final query = _searchController.text.toLowerCase();
-    setState(() {
+  setState(() {
       if (query.isEmpty) {
         _searchResults = [];
       } else {
@@ -166,6 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (_) => HomeDetailScreen(
+                    product: product,
                     name: product.name,
                     price: product.price.toInt(),
                     image: product.image,
@@ -203,6 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context,
           MaterialPageRoute(
             builder: (_) => HomeDetailScreen(
+              product: item,
               name: item.name,
               price: item.price.toInt(),
               image: item.image,

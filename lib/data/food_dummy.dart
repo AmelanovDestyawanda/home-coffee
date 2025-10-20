@@ -5,8 +5,7 @@ import 'package:home/models/product.dart';
 class FoodProduct extends Product {
   // 'image' sudah ada di class Product, jadi tidak perlu ditulis ulang.
   // Constructor di bawah ini sudah diperbaiki agar sesuai dengan parent class.
-  FoodProduct(String id, String name, double price, String image)
-      : super(id, name, price, image);
+  FoodProduct(super.id, super.name, super.price, super.image);
 
   @override
   String getCategory() => "Food";

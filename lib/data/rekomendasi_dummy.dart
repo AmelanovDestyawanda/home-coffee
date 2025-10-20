@@ -17,8 +17,6 @@ final List<Map<String, dynamic>> rekomendasi = [
     'price': 22000,
     'image': 'assets/images/icedcoffe.jpg',
   },
-  // ===== PERBAIKAN DI SINI =====
-  // Mengganti 'Donut' dengan 'Latte' karena gambar donut.jpg tidak ada.
   {
     'id': 'c3',
     'name': 'Latte',

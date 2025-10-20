@@ -1,3 +1,8 @@
+// lib/models/product.dart
+
+import 'coffee.dart';
+import 'food.dart';
+
 abstract class Product {
   String _id;
   String _name;
@@ -30,5 +35,18 @@ abstract class Product {
   // Polymorphism
   String getCategory();
 
-  static fromMap(Map<String, dynamic> productData) {}
+  // ===== PERBAIKAN DI SINI =====
+  static Product fromMap(Map<String, dynamic> data) {
+    final String id = data['id'];
+    
+    // Tentukan tipe produk berdasarkan ID
+    if (id.startsWith('c')) {
+      return Coffee.fromMap(data); // Kembalikan objek Coffee
+    } else if (id.startsWith('f')) {
+      return Food.fromMap(data); // Kembalikan objek Food
+    } else {
+      // Jika ada data aneh, lempar error agar mudah dicari
+      throw Exception('Tipe produk tidak dikenal: $id');
+    }
+  }
 }

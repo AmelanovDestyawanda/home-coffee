@@ -1,24 +1,27 @@
+// lib/models/food.dart
+
 import 'product.dart';
 
 class Food extends Product {
-  String _type;
-  String _image;
-
-  Food(String id, String name, double price, this._type, this._image)
-      : super(id, name, price, _image);
-
-  String get type => _type;
-  @override
-  String get image => _image;
-
-  set type(String value) {
-    if (value.isNotEmpty) _type = value;
-  }
-
-  set image(String value) {
-    if (value.isNotEmpty) _image = value;
-  }
+  // Constructor
+  Food({
+    required String id,
+    required String name,
+    required double price,
+    required String image,
+  }) : super(id, name, price, image);
 
   @override
   String getCategory() => "Food";
+
+  // Factory constructor untuk membuat objek Food dari Map
+  factory Food.fromMap(Map<String, dynamic> data) {
+    return Food(
+      id: data['id'],
+      name: data['name'],
+      // Konversi ke double dengan aman
+      price: (data['price'] as num).toDouble(),
+      image: data['image'],
+    );
+  }
 }

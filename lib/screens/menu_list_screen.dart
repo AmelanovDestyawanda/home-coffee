@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home/screens/detail_screen.dart';
+import 'package:home/screens/detail_screen.dart'; // Tetap menggunakan DetailScreen-mu
 import '../models/product.dart';
 
 class MenuListScreen extends StatelessWidget {
@@ -17,102 +17,62 @@ class MenuListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        // Menggunakan warna AppBar yang konsisten dengan tema
-        backgroundColor: Theme.of(context).colorScheme.background,
-        foregroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(16.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 kolom
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 16.0,
-          childAspectRatio: 0.75, // Mengatur rasio kartu agar lebih tinggi
-        ),
+      // ===== PERUBAHAN UTAMA DI SINI =====
+      // Mengganti GridView.builder menjadi ListView.builder
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8), // Padding agar tidak terlalu mepet
         itemCount: products.length,
         itemBuilder: (context, index) {
           final product = products[index];
-          return _buildProductGridCard(context, product);
-        },
-      ),
-    );
-  }
-
-  // WIDGET BARU UNTUK KARTU PRODUK DI GRID
-  Widget _buildProductGridCard(BuildContext context, Product product) {
-    // Ambil path gambar dari produk
-    String imagePath = "assets/images/amer.jpg"; // Default image
-    if (product.image.isNotEmpty) {
-      imagePath = product.image!;
-    }
-
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailScreen(product: product, heroTag: Object(),),
-          ),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+          
+          // Menggunakan ListTile untuk tampilan daftar vertikal yang rapi
+          return Card(
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Gambar Produk dengan Hero Animation
-            Expanded(
-              child: Hero(
-                tag: product.id, // Tag untuk animasi Hero
+            child: ListTile(
+              contentPadding: const EdgeInsets.all(12),
+              // Gambar produk di sebelah kiri
+              leading: Hero(
+                tag: 'list_${product.id}', // Tag Hero agar animasi tetap jalan
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                  borderRadius: BorderRadius.circular(8.0),
                   child: Image.asset(
-                    imagePath,
-                    width: double.infinity,
+                    product.image,
+                    width: 70,
+                    height: 70,
                     fit: BoxFit.cover,
-                    // Tambahkan error builder jika gambar tidak ditemukan
                     errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.coffee, size: 50, color: Colors.grey);
+                      return const Icon(Icons.broken_image, size: 70, color: Colors.grey);
                     },
                   ),
                 ),
               ),
-            ),
-            // Detail Produk
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.name,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "Rp ${product.price.toInt()}",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                ],
+              // Nama dan harga
+              title: Text(
+                product.name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
+              subtitle: Text("Rp ${product.price.toInt()}"),
+              // Ikon panah di sebelah kanan
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                // Navigasi tetap ke DetailScreen-mu
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailScreen(
+                      product: product, 
+                      heroTag: 'list_${product.id}', // Mengirim tag yang unik
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "By: Meyya",
+                  "By: Amelanov Destyawanda",
                   style: GoogleFonts.lato(
                     fontSize: 16,
                     fontStyle: FontStyle.italic,

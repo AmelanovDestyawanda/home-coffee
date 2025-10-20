@@ -66,9 +66,9 @@ class HomeCoffeeApp extends StatelessWidget {
           unselectedItemColor: Colors.grey,
           showUnselectedLabels: true,
         ),
-        
         useMaterial3: true,
       ),
+      
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {

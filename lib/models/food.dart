@@ -2,26 +2,23 @@
 
 import 'product.dart';
 
+// Food adalah 'anak' dari Product
 class Food extends Product {
-  // Constructor
   Food({
     required String id,
     required String name,
     required double price,
     required String image,
-  }) : super(id, name, price, image);
+  }) : super(
+            id: id,
+            name: name,
+            price: price,
+            image: image,
+            description: "Makanan lezat pendamping kopimu."); // Deskripsi default untuk food
 
+  // Memberikan implementasi spesifik untuk getCategory()
   @override
-  String getCategory() => "Food";
-
-  // Factory constructor untuk membuat objek Food dari Map
-  factory Food.fromMap(Map<String, dynamic> data) {
-    return Food(
-      id: data['id'],
-      name: data['name'],
-      // Konversi ke double dengan aman
-      price: (data['price'] as num).toDouble(),
-      image: data['image'],
-    );
+  String getCategory() {
+    return 'Food';
   }
 }

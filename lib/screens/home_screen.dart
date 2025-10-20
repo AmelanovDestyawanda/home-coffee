@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home/screens/detail_screen.dart';
 import 'package:provider/provider.dart';
 import '../models/product.dart';
 import '../provider/user_provider.dart';
@@ -9,7 +10,6 @@ import '../data/coffe_dummy.dart';
 import '../data/food_dummy.dart';
 import '../data/promos_dummy.dart';
 import '../data/rekomendasi_dummy.dart';
-import 'home_detail_screen.dart';
 import 'menu_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -165,11 +165,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => HomeDetailScreen(
+                  builder: (_) => DetailScreen(
                     product: product,
-                    name: product.name,
-                    price: product.price.toInt(),
-                    image: product.image,
                     heroTag: 'search_${product.id}',
                   ),
                 ),
@@ -182,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Widget-widget lainnya tidak ada perubahan signifikan
-  Widget _buildHorizontalProductList(List<Map<String, dynamic>> productData) {
+  Widget _buildHorizontalProductList(List<Product> productData) {
     return SizedBox(
       height: 260,
       child: ListView.builder(
@@ -190,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         itemCount: productData.length,
         itemBuilder: (context, index) {
-          final product = Product.fromMap(productData[index]);
+          final product = productData[index];
           return _buildProductCard(context, product);
         },
       ),
@@ -203,12 +200,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => HomeDetailScreen(
+            builder: (_) => DetailScreen(
               product: item,
-              name: item.name,
-              price: item.price.toInt(),
-              image: item.image,
-              heroTag: item.id,
+              heroTag: 'home_${item.id}',
             ),
           ),
         );

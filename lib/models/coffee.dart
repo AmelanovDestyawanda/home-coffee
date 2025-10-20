@@ -2,26 +2,18 @@
 
 import 'product.dart';
 
+// Coffee adalah 'anak' dari Product
 class Coffee extends Product {
-  // Constructor
   Coffee({
     required String id,
     required String name,
     required double price,
     required String image,
-  }) : super(id, name, price, image);
+  }) : super(id: id, name: name, price: price, image: image);
 
+  // Memberikan implementasi spesifik untuk getCategory()
   @override
-  String getCategory() => "Coffee";
-
-  // Factory constructor untuk membuat objek Coffee dari Map
-  factory Coffee.fromMap(Map<String, dynamic> data) {
-    return Coffee(
-      id: data['id'],
-      name: data['name'],
-      // Konversi ke double dengan aman
-      price: (data['price'] as num).toDouble(), 
-      image: data['image'],
-    );
+  String getCategory() {
+    return 'Coffee';
   }
 }

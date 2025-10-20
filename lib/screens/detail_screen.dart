@@ -100,7 +100,6 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  // WIDGET BARU UNTUK BOTTOM BAR DENGAN TOMBOL KUANTITAS YANG JELAS
   Widget _buildBottomBar(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
@@ -119,7 +118,6 @@ class _DetailScreenState extends State<DetailScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // --- KONTROL KUANTITAS DENGAN DESAIN BARU ---
           Row(
             children: [
               // Tombol Minus
@@ -148,8 +146,6 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ],
           ),
-
-          // Tombol Add to Cart
           ElevatedButton(
             child: const Text("Add to Cart"),
             style: ElevatedButton.styleFrom(
@@ -179,7 +175,6 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  // WIDGET HELPER UNTUK MEMBUAT TOMBOL KUANTITAS YANG KONSISTEN
   Widget _buildQuantityButton({
     required IconData icon,
     required VoidCallback onPressed,

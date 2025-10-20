@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/images/logoo.png", width: 100, color: Colors.white),
+                Image.asset("assets/images/logo.png"),
                 const SizedBox(height: 20),
                 Text(
                   "Welcome Back",

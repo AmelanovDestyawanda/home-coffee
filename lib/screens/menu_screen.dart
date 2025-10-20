@@ -1,10 +1,7 @@
-// lib/screens/menu_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:home/data/coffe_dummy.dart';
 import 'package:home/data/food_dummy.dart';
 import 'package:home/models/product.dart';
-// Import MenuListScreen yang sudah kamu buat
 import 'package:home/screens/menu_list_screen.dart'; 
 
 class MenuScreen extends StatelessWidget {
@@ -29,7 +26,6 @@ class MenuScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      // AppBar agar tampilan lebih rapi
       appBar: AppBar(
         title: const Text("Pilih Kategori Menu"),
         elevation: 0,
@@ -37,7 +33,6 @@ class MenuScreen extends StatelessWidget {
         foregroundColor: Theme.of(context).colorScheme.primary,
         centerTitle: true,
       ),
-      // GridView untuk menampilkan 2 pilihan kategori
       body: GridView.builder(
         padding: const EdgeInsets.all(16),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -51,14 +46,11 @@ class MenuScreen extends StatelessWidget {
           final category = categories[index];
           return GestureDetector(
             onTap: () {
-              // INI BAGIAN PENTINGNYA
-              // Saat kategori diklik, kita panggil MenuListScreen punyamu
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (_) => MenuListScreen(
                     title: category["title"] as String,
-                    // Mengirim daftar produk yang sesuai ke screen selanjutnya
                     products: category["products"] as List<Product>,
                   ),
                 ),

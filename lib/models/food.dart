@@ -1,8 +1,5 @@
-// lib/models/food.dart
-
 import 'product.dart';
 
-// Food adalah 'anak' dari Product
 class Food extends Product {
   Food({
     required String id,
@@ -14,9 +11,8 @@ class Food extends Product {
             name: name,
             price: price,
             image: image,
-            description: "Makanan lezat pendamping kopimu."); // Deskripsi default untuk food
+            description: "Makanan lezat pendamping kopimu.");
 
-  // Memberikan implementasi spesifik untuk getCategory()
   @override
   String getCategory() {
     return 'Food';

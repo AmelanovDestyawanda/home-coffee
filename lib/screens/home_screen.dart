@@ -67,8 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // ===== PERBAIKAN UTAMA DI SINI =====
-  // Menggunakan struktur Column -> Expanded -> ListView
   @override
   Widget build(BuildContext context) {
     bool isSearching = _searchController.text.isNotEmpty;
@@ -77,14 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Bagian atas yang tidak bisa di-scroll
           const SizedBox(height: 20),
           _buildWelcomeHeader(context),
           const SizedBox(height: 24),
           _buildSearchBar(context),
           const SizedBox(height: 32),
-
-          // Bagian bawah yang bisa di-scroll
           Expanded(
             child: isSearching
                 ? _buildSearchResults()
@@ -95,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Konten utama sekarang dibungkus ListView agar bisa scroll
   Widget _buildDefaultHomeContent() {
     return ListView(
       padding: EdgeInsets.zero, // Hapus padding default
@@ -132,7 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Hasil pencarian sekarang menggunakan ListView yang bisa di-scroll
   Widget _buildSearchResults() {
     if (_searchResults.isEmpty) {
       return const Center(
@@ -178,7 +171,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Widget-widget lainnya tidak ada perubahan signifikan
   Widget _buildHorizontalProductList(List<Product> productData) {
     return SizedBox(
       height: 260,

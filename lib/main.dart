@@ -35,19 +35,14 @@ class HomeCoffeeApp extends StatelessWidget {
     return MaterialApp(
       title: 'Home Coffee',
       theme: ThemeData(
-        // --- PERUBAHAN UTAMA DI SINI ---
-        // Menggunakan GoogleFonts untuk menerapkan tema teks Lato
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-        
         colorScheme: ColorScheme.fromSeed(
           seedColor: primaryColor,
           primary: primaryColor,
           secondary: accentColor,
           background: secondaryColor,
         ),
-        
         scaffoldBackgroundColor: secondaryColor,
-        
         appBarTheme: const AppBarTheme(
           backgroundColor: secondaryColor,
           elevation: 0,

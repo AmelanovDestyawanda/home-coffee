@@ -25,8 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    // PERBAIKAN: Menggunakan addPostFrameCallback untuk inisialisasi animasi
-    // Ini memastikan 'context' sudah tersedia dan mencegah error.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller = AnimationController(vsync: this, duration: const Duration(seconds: 10))
         ..repeat(reverse: true);
@@ -82,7 +80,6 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    // Menampilkan loading jika animasi belum siap
     if (_controller == null || _color1 == null || _color2 == null) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
@@ -108,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/images/logoo.png", width: 100, color: Colors.white),
+                Image.asset("assets/images/logo.png"),
                 const SizedBox(height: 20),
                 Text(
                   "Create Account",
@@ -129,11 +126,10 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
                   icon: Icons.person_outline,
                 ),
                 const SizedBox(height: 20),
-                // --- IKON EMAIL DITAMBAHKAN DI SINI ---
                 _buildTextField(
                   controller: emailController,
                   labelText: "Email",
-                  icon: Icons.email_outlined, // Ikon email ditambahkan
+                  icon: Icons.email_outlined,
                 ),
                 const SizedBox(height: 20),
                 _buildTextField(

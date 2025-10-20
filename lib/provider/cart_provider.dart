@@ -3,7 +3,6 @@ import 'package:home/models/cart_item.dart';
 import 'package:home/models/product.dart';
 
 class CartProvider with ChangeNotifier {
-  // Menggunakan Map untuk menyimpan item dengan ID produk sebagai kunci
   final Map<String, CartItem> _cartItems = {};
 
   Map<String, CartItem> get cartItems => {..._cartItems};
@@ -14,7 +13,6 @@ class CartProvider with ChangeNotifier {
 
   void addToCart(Product product) {
     if (_cartItems.containsKey(product.id)) {
-      // Jika produk sudah ada, tambah kuantitasnya
       _cartItems.update(
         product.id,
         (existingItem) => CartItem(
@@ -23,7 +21,6 @@ class CartProvider with ChangeNotifier {
         ),
       );
     } else {
-      // Jika produk baru, tambahkan ke keranjang
       _cartItems.putIfAbsent(
         product.id,
         () => CartItem(product: product),
@@ -36,7 +33,6 @@ class CartProvider with ChangeNotifier {
     if (!_cartItems.containsKey(productId)) return;
 
     if (_cartItems[productId]!.quantity > 1) {
-      // Jika kuantitas lebih dari 1, kurangi saja
       _cartItems.update(
         productId,
         (existingItem) => CartItem(
@@ -45,7 +41,6 @@ class CartProvider with ChangeNotifier {
         ),
       );
     } else {
-      // Jika kuantitas hanya 1, hapus dari keranjang
       _cartItems.remove(productId);
     }
     notifyListeners();

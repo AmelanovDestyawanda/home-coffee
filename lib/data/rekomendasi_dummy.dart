@@ -1,5 +1,3 @@
-// lib/data/rekomendasi_dummy.dart
-
 import '../models/product.dart';
 import 'coffe_dummy.dart';
 import 'food_dummy.dart';

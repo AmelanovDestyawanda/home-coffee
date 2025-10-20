@@ -29,15 +29,15 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage("assets/images/profile.png"),
+              backgroundImage: AssetImage("assets/images/pp.jpg"),
             ),
             const SizedBox(height: 16),
             Text(
-              userProvider.userName, // Gunakan nama dari provider
+              userProvider.userName, 
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text(
-              userProvider.userEmail, // Gunakan email dari provider
+              userProvider.userEmail,
               style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 30),

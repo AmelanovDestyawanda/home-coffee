@@ -112,8 +112,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  // WIDGET _buildTextField DENGAN PENAMBAHAN FUNGSI onSuffixIconPressed
   Widget _buildTextField({
     required TextEditingController controller,
     required String labelText,
